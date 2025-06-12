@@ -11,6 +11,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@types/nodemailer": "^6.4.17",
     "bullmq": "^5.53.2",
     "dotenv": "^16.4.7",
     "express": "^5.1.0",

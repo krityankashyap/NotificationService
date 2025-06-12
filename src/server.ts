@@ -6,7 +6,7 @@ import { appErrorHandler, genericErrorHandler } from './middlewares/error.middle
 import logger from './config/logger.config';
 import { attachCorrelationIdMiddleware } from './middlewares/correlation.middleware';
 import { setupMailWorker } from './processor/email.processor';
-import { renderMailTemplate } from './templates/templates.handlers';
+import { addEmailToQueue } from './producer/email.producer';
 
 const app = express();
 
@@ -35,11 +35,14 @@ app.listen(serverConfig.PORT, async () => {
     setupMailWorker();
     logger.info(`Mailer worker setup completed`);
     
-    const content = await renderMailTemplate('welcome' , {
-      name: "Krityan",
-      appname: "booking.com"
-    });
-
-    console.log(`Render the mail template \n ${content}`);
+  addEmailToQueue({
+    to: 'kashyapkrityan@gmail.com',
+    subject: "you have booked a room",
+    templateId: "welcome",
+    params: {
+      name: "Patna New Hotel",
+      appName: "Make my trip"
+    }
+  })
     
 });
